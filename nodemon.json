@@ -1,0 +1,6 @@
+{
+	"ignore": [".git", "node_modules", "./src/routes.ts", "./src/swagger.json"],
+	"watch": ["src"],
+	"exec": "npm start",
+	"ext": "ts"
+}

@@ -1,0 +1,599 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"CropResponse": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"label": {
+						"type": "string"
+					},
+					"active": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"id",
+					"label",
+					"active"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FarmResponse": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"city": {
+						"type": "string"
+					},
+					"state": {
+						"type": "string"
+					},
+					"area": {
+						"type": "number",
+						"format": "double"
+					},
+					"usefulArea": {
+						"type": "number",
+						"format": "double"
+					},
+					"vegetationArea": {
+						"type": "number",
+						"format": "double"
+					},
+					"plantedCrops": {
+						"items": {
+							"$ref": "#/components/schemas/CropResponse"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"city",
+					"state",
+					"area",
+					"usefulArea",
+					"vegetationArea",
+					"plantedCrops"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FarmRequest": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"city": {
+						"type": "string"
+					},
+					"state": {
+						"type": "string"
+					},
+					"area": {
+						"type": "number",
+						"format": "double"
+					},
+					"usefulArea": {
+						"type": "number",
+						"format": "double"
+					},
+					"vegetationArea": {
+						"type": "number",
+						"format": "double"
+					},
+					"plantedCrops": {
+						"items": {
+							"$ref": "#/components/schemas/CropResponse"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PaginatedResponse_FarmResponse_": {
+				"properties": {
+					"totalPages": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalItems": {
+						"type": "number",
+						"format": "double"
+					},
+					"currentPage": {
+						"type": "number",
+						"format": "double"
+					},
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/FarmResponse"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"totalPages",
+					"totalItems",
+					"currentPage",
+					"items"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PaginatedQueryRequest_FarmRequest_": {
+				"properties": {
+					"pageSize": {
+						"type": "number",
+						"format": "double",
+						"default": 10
+					},
+					"pageNumber": {
+						"type": "number",
+						"format": "double",
+						"default": 0
+					},
+					"query": {
+						"$ref": "#/components/schemas/FarmRequest"
+					},
+					"order": {
+						"type": "string"
+					},
+					"orderBy": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ProducerResponse": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"farm": {
+						"$ref": "#/components/schemas/FarmResponse"
+					}
+				},
+				"required": [
+					"id",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ProducerRequest": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"farmId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PaginatedResponse_ProducerResponse_": {
+				"properties": {
+					"totalPages": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalItems": {
+						"type": "number",
+						"format": "double"
+					},
+					"currentPage": {
+						"type": "number",
+						"format": "double"
+					},
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/ProducerResponse"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"totalPages",
+					"totalItems",
+					"currentPage",
+					"items"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PaginatedQueryRequest_ProducerRequest_": {
+				"properties": {
+					"pageSize": {
+						"type": "number",
+						"format": "double",
+						"default": 10
+					},
+					"pageNumber": {
+						"type": "number",
+						"format": "double",
+						"default": 0
+					},
+					"query": {
+						"$ref": "#/components/schemas/ProducerRequest"
+					},
+					"order": {
+						"type": "string"
+					},
+					"orderBy": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "brain-agriculture-mock",
+		"version": "1.0.0",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/crops": {
+			"get": {
+				"operationId": "GetAll",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CropResponse"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Crops"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/farms": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FarmResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Farms"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/FarmRequest"
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FarmResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Farms"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/FarmRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/farms/search": {
+			"post": {
+				"operationId": "Search",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedResponse_FarmResponse_"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Farms"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PaginatedQueryRequest_FarmRequest_"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/farms/{id}": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FarmResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Farms"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Farms"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/producers": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ProducerResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Producers"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ProducerRequest"
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ProducerResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Producers"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ProducerRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/producers/search": {
+			"post": {
+				"operationId": "Search",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedResponse_ProducerResponse_"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Producers"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PaginatedQueryRequest_ProducerRequest_"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/producers/{id}": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ProducerResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Producers"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Producers"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
