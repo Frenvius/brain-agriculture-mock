@@ -5,4 +5,5 @@ export interface ProducerEntity {
 	name?: string;
 	farmId?: number;
 	farm?: FarmEntity;
+	taxDocument?: string;
 }
