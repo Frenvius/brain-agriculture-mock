@@ -20,4 +20,8 @@ export class FarmRepository extends AbstractRepository<FarmEntity, FarmRequest> 
 
 		return result;
 	}
+
+	public async create(entity: FarmEntity): Promise<FarmEntity> {
+		return super.create(entity);
+	}
 }

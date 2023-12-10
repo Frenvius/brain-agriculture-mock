@@ -1,19 +1,43 @@
 import { FarmService } from './FarmService';
+import { CropService } from './CropService';
 import { AbstractService } from './AbstractService';
 import { ProducerConverter } from '../converter/ProducerConverter';
 import { ProducerEntity } from '../../domain/entity/ProducerEntity';
 import { ProducerRequest } from '../../domain/request/ProducerRequest';
+import { FarmRepository } from '../../adapter/repository/FarmRepository';
 import { ProducerResponse } from '../../domain/response/ProducerResponse';
 import { PaginatedResponse } from '../../domain/response/PaginatedResponse';
 import { ProducerRepository } from '../../adapter/repository/ProducerRepository';
 import { PaginatedQueryRequest } from '../../domain/request/PaginatedQueryRequest';
+import { ProducerCreateRequest } from '../../domain/request/ProducerCreateRequest';
 
 export class ProducerService extends AbstractService<ProducerRequest, ProducerResponse, ProducerEntity> {
 	public static instance = new ProducerService();
 	public _farmService = FarmService.instance;
+	public _farmRepository = FarmRepository.instance;
+	public _cropService = CropService.instance;
 
 	constructor() {
 		super(ProducerConverter.instance, ProducerRepository.instance);
+	}
+
+	public async create(request: ProducerCreateRequest): Promise<ProducerResponse> {
+		const { plantedCrops, ...farmData } = request.farmData;
+		const farm = await this._farmRepository.create(farmData);
+
+		for (const crop of plantedCrops!) {
+			await this._cropService.addCropRelation(crop.id!, farm.id!);
+		}
+
+		const entity = await this.repository.create({
+			name: request.name,
+			farmId: farm.id,
+			taxDocument: request.taxDocument
+		});
+
+		entity.farm = await this._farmService.getFarmData(farm);
+
+		return this.converter.toResponse(entity);
 	}
 
 	public async search(request: PaginatedQueryRequest<ProducerRequest>): Promise<PaginatedResponse<ProducerResponse>> {

@@ -81,7 +81,18 @@ const models: TsoaRoute.Models = {
         "properties": {
             "id": {"dataType":"double","required":true},
             "name": {"dataType":"string","required":true},
+            "taxDocument": {"dataType":"string","required":true},
             "farm": {"ref":"FarmResponse"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ProducerCreateRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "name": {"dataType":"string","required":true},
+            "taxDocument": {"dataType":"string","required":true},
+            "farmData": {"ref":"FarmRequest","required":true},
         },
         "additionalProperties": false,
     },
@@ -92,6 +103,7 @@ const models: TsoaRoute.Models = {
             "id": {"dataType":"double"},
             "name": {"dataType":"string"},
             "farmId": {"dataType":"double"},
+            "taxDocument": {"dataType":"string"},
         },
         "additionalProperties": false,
     },
@@ -284,7 +296,7 @@ export function RegisterRoutes(app: Router) {
 
             function ProducerController_create(request: any, response: any, next: any) {
             const args = {
-                    request: {"in":"body","name":"request","required":true,"ref":"ProducerRequest"},
+                    request: {"in":"body","name":"request","required":true,"ref":"ProducerCreateRequest"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

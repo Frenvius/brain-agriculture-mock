@@ -175,13 +175,37 @@
 					"name": {
 						"type": "string"
 					},
+					"taxDocument": {
+						"type": "string"
+					},
 					"farm": {
 						"$ref": "#/components/schemas/FarmResponse"
 					}
 				},
 				"required": [
 					"id",
-					"name"
+					"name",
+					"taxDocument"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ProducerCreateRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"taxDocument": {
+						"type": "string"
+					},
+					"farmData": {
+						"$ref": "#/components/schemas/FarmRequest"
+					}
+				},
+				"required": [
+					"name",
+					"taxDocument",
+					"farmData"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -198,6 +222,9 @@
 					"farmId": {
 						"type": "number",
 						"format": "double"
+					},
+					"taxDocument": {
+						"type": "string"
 					}
 				},
 				"type": "object",
@@ -468,7 +495,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/ProducerRequest"
+								"$ref": "#/components/schemas/ProducerCreateRequest"
 							}
 						}
 					}

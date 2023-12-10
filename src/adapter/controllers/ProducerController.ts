@@ -8,6 +8,7 @@ import { ProducerService } from '../../usecase/service/ProducerService';
 import { ProducerResponse } from '../../domain/response/ProducerResponse';
 import { PaginatedResponse } from '../../domain/response/PaginatedResponse';
 import { PaginatedQueryRequest } from '../../domain/request/PaginatedQueryRequest';
+import { ProducerCreateRequest } from '../../domain/request/ProducerCreateRequest';
 
 @Route('producers')
 @Tags('Producers')
@@ -15,7 +16,7 @@ export class ProducerController extends AbstractController<ProducerRequest, Prod
 	protected _service = ProducerService.instance;
 
 	@Post()
-	public async create(@Body() request: ProducerRequest): Promise<ProducerResponse> {
+	public async create(@Body() request: ProducerCreateRequest): Promise<ProducerResponse> {
 		const response = await this._service.create(request);
 		this.setStatus(HttpStatus.CREATED);
 		return response;
