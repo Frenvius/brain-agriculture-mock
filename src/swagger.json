@@ -219,10 +219,6 @@
 					"name": {
 						"type": "string"
 					},
-					"farmId": {
-						"type": "number",
-						"format": "double"
-					},
 					"taxDocument": {
 						"type": "string"
 					}

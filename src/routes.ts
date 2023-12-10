@@ -102,7 +102,6 @@ const models: TsoaRoute.Models = {
         "properties": {
             "id": {"dataType":"double"},
             "name": {"dataType":"string"},
-            "farmId": {"dataType":"double"},
             "taxDocument": {"dataType":"string"},
         },
         "additionalProperties": false,

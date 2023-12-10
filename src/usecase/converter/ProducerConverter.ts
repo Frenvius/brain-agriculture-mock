@@ -10,7 +10,6 @@ export class ProducerConverter implements AbstractConverter<ProducerEntity, Prod
 	public toEntity(request: ProducerRequest): ProducerEntity {
 		return {
 			name: request.name,
-			farmId: request.farmId,
 			taxDocument: request.taxDocument
 		};
 	}

@@ -22,22 +22,19 @@ export class ProducerService extends AbstractService<ProducerRequest, ProducerRe
 	}
 
 	public async create(request: ProducerCreateRequest): Promise<ProducerResponse> {
+		const { name, taxDocument } = request;
 		const { plantedCrops, ...farmData } = request.farmData;
-		const farm = await this._farmRepository.create(farmData);
+
+		const producer = await this.repository.create({ name, taxDocument });
+		const farm = await this._farmRepository.create({ ...farmData, producerId: producer.id! });
 
 		for (const crop of plantedCrops!) {
 			await this._cropService.addCropRelation(crop.id!, farm.id!);
 		}
 
-		const entity = await this.repository.create({
-			name: request.name,
-			farmId: farm.id,
-			taxDocument: request.taxDocument
-		});
+		producer.farm = await this._farmService.getFarmData(farm);
 
-		entity.farm = await this._farmService.getFarmData(farm);
-
-		return this.converter.toResponse(entity);
+		return this.converter.toResponse(producer);
 	}
 
 	public async search(request: PaginatedQueryRequest<ProducerRequest>): Promise<PaginatedResponse<ProducerResponse>> {

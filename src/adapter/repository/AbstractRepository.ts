@@ -12,14 +12,6 @@ export abstract class AbstractRepository<Entity, Request extends AbstractUpdateR
 	}
 
 	protected abstract getFilters(query: Request): any[];
-	protected getOrdination(query: PaginatedQueryRequest<Request>): any {
-		const result: any = {};
-
-		if (query.order) result.order = query.order;
-		if (query.orderBy) result.orderBy = query.orderBy;
-
-		return result;
-	}
 
 	public async create(entity: Entity): Promise<Entity> {
 		return this.client.create({ data: entity, ...this.joins });
@@ -38,11 +30,6 @@ export abstract class AbstractRepository<Entity, Request extends AbstractUpdateR
 	public async search(request: PaginatedQueryRequest<Request>): Promise<Entity[]> {
 		const query = new PaginatedDatabaseQuery(request);
 		if (request.query) query.where = { OR: this.getFilters(request.query) };
-		const ordination = this.getOrdination(request);
-
-		// const data = { ...query, ...ordination, ...this.joins };
-
-		// return (await findMany(data, this.client.name)) as unknown as Promise<Entity[]>;
 
 		return this.client.findMany({
 			...query,

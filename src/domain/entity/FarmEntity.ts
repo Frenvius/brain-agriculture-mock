@@ -6,6 +6,7 @@ export interface FarmEntity {
 	city?: string;
 	state?: string;
 	area?: number;
+	producerId?: number;
 	usefulArea?: number;
 	vegetationArea?: number;
 	plantedCrops?: CropResponse[];
