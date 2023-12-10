@@ -5,6 +5,8 @@ import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, H
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { CropController } from './adapter/controllers/CropController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { DashboardController } from './adapter/controllers/DashboardController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { FarmController } from './adapter/controllers/FarmController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ProducerController } from './adapter/controllers/ProducerController';
@@ -19,6 +21,27 @@ const models: TsoaRoute.Models = {
             "id": {"dataType":"double","required":true},
             "label": {"dataType":"string","required":true},
             "active": {"dataType":"boolean","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ChartItem": {
+        "dataType": "refObject",
+        "properties": {
+            "label": {"dataType":"string","required":true},
+            "value": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "DashboardResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "totalFarms": {"dataType":"double","required":true},
+            "totalAcres": {"dataType":"double","required":true},
+            "pieChartByState": {"dataType":"array","array":{"dataType":"refObject","ref":"ChartItem"},"required":true},
+            "pieChartByCrop": {"dataType":"array","array":{"dataType":"refObject","ref":"ChartItem"},"required":true},
+            "pieChartByLandUse": {"dataType":"array","array":{"dataType":"refObject","ref":"ChartItem"},"required":true},
         },
         "additionalProperties": false,
     },
@@ -150,6 +173,30 @@ export function RegisterRoutes(app: Router) {
 
 
               const promise = controller.getAll.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/dashboard',
+            ...(fetchMiddlewares<RequestHandler>(DashboardController)),
+            ...(fetchMiddlewares<RequestHandler>(DashboardController.prototype.getData)),
+
+            function DashboardController_getData(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new DashboardController();
+
+
+              const promise = controller.getData.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

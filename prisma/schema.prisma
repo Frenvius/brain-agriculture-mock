@@ -1,44 +1,44 @@
 generator client {
-	provider      = "prisma-client-js"
-	binaryTargets = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
+    provider      = "prisma-client-js"
+    binaryTargets = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
 }
 
 datasource db {
-	provider = "postgresql"
-	url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model Producer {
-	id          Int    @id @default(autoincrement())
-	name        String
-	taxDocument String @unique @db.VarChar(14)
-	farm        Farm?
+    id          Int    @id @default(autoincrement())
+    name        String
+    taxDocument String @unique @db.VarChar(14)
+    farm        Farm?
 }
 
 model Farm {
-	id             Int            @id @default(autoincrement())
-	name           String
-	city           String
-	state          String
-	area           Float
-	usefulArea     Float
-	vegetationArea Float
-	producerId     Int            @unique
-	producer       Producer       @relation(fields: [producerId], references: [id], onDelete: Cascade)
-	cropRelation   CropRelation[]
+    id             Int            @id @default(autoincrement())
+    name           String
+    city           String
+    state          String
+    area           Float
+    usefulArea     Float
+    vegetationArea Float
+    producerId     Int            @unique
+    producer       Producer       @relation(fields: [producerId], references: [id], onDelete: Cascade)
+    cropRelation   CropRelation[]
 }
 
 model Crop {
-	id           Int            @id @default(autoincrement())
-	label        String
-	active       Boolean        @default(true)
-	cropRelation CropRelation[]
+    id           Int            @id @default(autoincrement())
+    label        String
+    active       Boolean        @default(true)
+    cropRelation CropRelation[]
 }
 
 model CropRelation {
-	id     Int  @id @default(autoincrement())
-	cropId Int
-	crop   Crop @relation(fields: [cropId], references: [id], onDelete: Cascade)
-	farmId Int
-	farm   Farm @relation(fields: [farmId], references: [id], onDelete: Cascade)
+    id     Int  @id @default(autoincrement())
+    cropId Int
+    crop   Crop @relation(fields: [cropId], references: [id], onDelete: Cascade)
+    farmId Int
+    farm   Farm @relation(fields: [farmId], references: [id], onDelete: Cascade)
 }

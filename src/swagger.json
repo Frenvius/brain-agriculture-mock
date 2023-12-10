@@ -27,6 +27,62 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"ChartItem": {
+				"properties": {
+					"label": {
+						"type": "string"
+					},
+					"value": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"label",
+					"value"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"DashboardResponse": {
+				"properties": {
+					"totalFarms": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalAcres": {
+						"type": "number",
+						"format": "double"
+					},
+					"pieChartByState": {
+						"items": {
+							"$ref": "#/components/schemas/ChartItem"
+						},
+						"type": "array"
+					},
+					"pieChartByCrop": {
+						"items": {
+							"$ref": "#/components/schemas/ChartItem"
+						},
+						"type": "array"
+					},
+					"pieChartByLandUse": {
+						"items": {
+							"$ref": "#/components/schemas/ChartItem"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"totalFarms",
+					"totalAcres",
+					"pieChartByState",
+					"pieChartByCrop",
+					"pieChartByLandUse"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"FarmResponse": {
 				"properties": {
 					"id": {
@@ -301,6 +357,28 @@
 				},
 				"tags": [
 					"Crops"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/dashboard": {
+			"get": {
+				"operationId": "GetData",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DashboardResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Dashboard"
 				],
 				"security": [],
 				"parameters": []
