@@ -21,6 +21,12 @@ export class ProducerService extends AbstractService<ProducerRequest, ProducerRe
 		super(ProducerConverter.instance, ProducerRepository.instance);
 	}
 
+	public async get(id: string): Promise<ProducerResponse> {
+		const producer = await this.repository.get(id);
+		producer.farm = await this._farmService.getFarmData(producer.farm!);
+		return this.converter.toResponse(producer);
+	}
+
 	public async create(request: ProducerCreateRequest): Promise<ProducerResponse> {
 		const { name, taxDocument } = request;
 		const { plantedCrops, ...farmData } = request.farmData;
