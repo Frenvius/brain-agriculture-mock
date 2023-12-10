@@ -93,6 +93,10 @@
 						"type": "number",
 						"format": "double"
 					},
+					"producerId": {
+						"type": "number",
+						"format": "double"
+					},
 					"usefulArea": {
 						"type": "number",
 						"format": "double"
@@ -190,26 +194,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"ProducerCreateRequest": {
-				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"taxDocument": {
-						"type": "string"
-					},
-					"farmData": {
-						"$ref": "#/components/schemas/FarmRequest"
-					}
-				},
-				"required": [
-					"name",
-					"taxDocument",
-					"farmData"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"ProducerRequest": {
 				"properties": {
 					"id": {
@@ -221,6 +205,9 @@
 					},
 					"taxDocument": {
 						"type": "string"
+					},
+					"farmData": {
+						"$ref": "#/components/schemas/FarmRequest"
 					}
 				},
 				"type": "object",
@@ -491,7 +478,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/ProducerCreateRequest"
+								"$ref": "#/components/schemas/ProducerRequest"
 							}
 						}
 					}

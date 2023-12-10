@@ -9,7 +9,6 @@ import { ProducerResponse } from '../../domain/response/ProducerResponse';
 import { PaginatedResponse } from '../../domain/response/PaginatedResponse';
 import { ProducerRepository } from '../../adapter/repository/ProducerRepository';
 import { PaginatedQueryRequest } from '../../domain/request/PaginatedQueryRequest';
-import { ProducerCreateRequest } from '../../domain/request/ProducerCreateRequest';
 
 export class ProducerService extends AbstractService<ProducerRequest, ProducerResponse, ProducerEntity> {
 	public static instance = new ProducerService();
@@ -27,9 +26,9 @@ export class ProducerService extends AbstractService<ProducerRequest, ProducerRe
 		return this.converter.toResponse(producer);
 	}
 
-	public async create(request: ProducerCreateRequest): Promise<ProducerResponse> {
+	public async create(request: ProducerRequest): Promise<ProducerResponse> {
 		const { name, taxDocument } = request;
-		const { plantedCrops, ...farmData } = request.farmData;
+		const { plantedCrops, ...farmData } = request.farmData!;
 
 		const producer = await this.repository.create({ name, taxDocument });
 		const farm = await this._farmRepository.create({ ...farmData, producerId: producer.id! });
@@ -39,6 +38,23 @@ export class ProducerService extends AbstractService<ProducerRequest, ProducerRe
 		}
 
 		producer.farm = await this._farmService.getFarmData(farm);
+
+		return this.converter.toResponse(producer);
+	}
+
+	public async update(request: ProducerRequest): Promise<ProducerResponse> {
+		const { id, name, taxDocument } = request;
+		const { plantedCrops, ...farm } = request.farmData!;
+
+		const producer = await this.repository.update({ id, name, taxDocument });
+		const updatedFarm = await this._farmRepository.update({ ...farm, producerId: producer.id! });
+
+		await this._cropService.removeCropRelation(updatedFarm.id!);
+		for (const crop of plantedCrops!) {
+			await this._cropService.addCropRelation(crop.id!, farm.id!);
+		}
+
+		producer.farm = await this._farmService.getFarmData(updatedFarm);
 
 		return this.converter.toResponse(producer);
 	}

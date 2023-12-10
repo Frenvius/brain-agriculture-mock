@@ -19,4 +19,8 @@ export class CropRepository {
 		const joins = { include: { crop: true } };
 		return this._clientCropRelation.create({ data: { cropId, farmId }, ...joins });
 	}
+
+	async removeCropRelation(farmId: number): Promise<CropRelationEntity> {
+		return this._clientCropRelation.deleteMany({ where: { farmId } });
+	}
 }

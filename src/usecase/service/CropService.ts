@@ -23,4 +23,9 @@ export class CropService {
 		const entity = await this._repository.addCropRelation(cropId, farmId);
 		return this._converter.toRelationResponse(entity);
 	}
+
+	async removeCropRelation(farmId: number): Promise<CropResponse> {
+		const entity = await this._repository.removeCropRelation(farmId);
+		return this._converter.toRelationResponse(entity);
+	}
 }

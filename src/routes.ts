@@ -46,6 +46,7 @@ const models: TsoaRoute.Models = {
             "city": {"dataType":"string"},
             "state": {"dataType":"string"},
             "area": {"dataType":"double"},
+            "producerId": {"dataType":"double"},
             "usefulArea": {"dataType":"double"},
             "vegetationArea": {"dataType":"double"},
             "plantedCrops": {"dataType":"array","array":{"dataType":"refObject","ref":"CropResponse"}},
@@ -87,22 +88,13 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ProducerCreateRequest": {
-        "dataType": "refObject",
-        "properties": {
-            "name": {"dataType":"string","required":true},
-            "taxDocument": {"dataType":"string","required":true},
-            "farmData": {"ref":"FarmRequest","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ProducerRequest": {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double"},
             "name": {"dataType":"string"},
             "taxDocument": {"dataType":"string"},
+            "farmData": {"ref":"FarmRequest"},
         },
         "additionalProperties": false,
     },
@@ -295,7 +287,7 @@ export function RegisterRoutes(app: Router) {
 
             function ProducerController_create(request: any, response: any, next: any) {
             const args = {
-                    request: {"in":"body","name":"request","required":true,"ref":"ProducerCreateRequest"},
+                    request: {"in":"body","name":"request","required":true,"ref":"ProducerRequest"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

@@ -22,7 +22,7 @@ export abstract class AbstractRepository<Entity, Request extends AbstractUpdateR
 
 		return this.client.update({
 			...query,
-			data: { ...request, updatedAt: new Date() },
+			data: { ...request },
 			...this.joins
 		});
 	}
