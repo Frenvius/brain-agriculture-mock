@@ -14,8 +14,8 @@ class Server {
 	}
 
 	private _startListening(): void {
-		this._app.listen(4000, () => {
-			const startMessage = `Server started at: http://localhost:${4000}/swagger`;
+		this._app.listen(4050, () => {
+			const startMessage = `Server started at: http://localhost:${4050}/swagger`;
 			console.log(startMessage);
 		});
 	}
