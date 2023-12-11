@@ -1,4 +1,13 @@
 services:
+  web:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "4050:4050"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
   postgres:
     image: postgres:latest
     environment:
