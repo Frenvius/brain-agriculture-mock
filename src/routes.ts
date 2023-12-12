@@ -88,14 +88,20 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Order": {
+        "dataType": "refObject",
+        "properties": {
+        },
+        "additionalProperties": {"dataType":"string"},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PaginatedQueryRequest_FarmRequest_": {
         "dataType": "refObject",
         "properties": {
             "pageSize": {"dataType":"double","default":10},
             "pageNumber": {"dataType":"double","default":0},
             "query": {"ref":"FarmRequest"},
-            "order": {"dataType":"string"},
-            "orderBy": {"dataType":"string"},
+            "orderBy": {"dataType":"array","array":{"dataType":"refObject","ref":"Order"}},
         },
         "additionalProperties": false,
     },
@@ -139,8 +145,7 @@ const models: TsoaRoute.Models = {
             "pageSize": {"dataType":"double","default":10},
             "pageNumber": {"dataType":"double","default":0},
             "query": {"ref":"ProducerRequest"},
-            "order": {"dataType":"string"},
-            "orderBy": {"dataType":"string"},
+            "orderBy": {"dataType":"array","array":{"dataType":"refObject","ref":"Order"}},
         },
         "additionalProperties": false,
     },

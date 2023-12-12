@@ -201,6 +201,13 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"Order": {
+				"properties": {},
+				"type": "object",
+				"additionalProperties": {
+					"type": "string"
+				}
+			},
 			"PaginatedQueryRequest_FarmRequest_": {
 				"properties": {
 					"pageSize": {
@@ -216,11 +223,11 @@
 					"query": {
 						"$ref": "#/components/schemas/FarmRequest"
 					},
-					"order": {
-						"type": "string"
-					},
 					"orderBy": {
-						"type": "string"
+						"items": {
+							"$ref": "#/components/schemas/Order"
+						},
+						"type": "array"
 					}
 				},
 				"type": "object",
@@ -314,11 +321,11 @@
 					"query": {
 						"$ref": "#/components/schemas/ProducerRequest"
 					},
-					"order": {
-						"type": "string"
-					},
 					"orderBy": {
-						"type": "string"
+						"items": {
+							"$ref": "#/components/schemas/Order"
+						},
+						"type": "array"
 					}
 				},
 				"type": "object",

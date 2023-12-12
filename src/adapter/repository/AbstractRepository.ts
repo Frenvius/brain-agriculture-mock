@@ -1,7 +1,7 @@
 import { DatabaseTable, getClientForTable } from './DatabaseTable';
 import { AbstractUpdateRequest } from '../../domain/request/AbstractUpdateRequest';
-import { PaginatedQueryRequest } from '../../domain/request/PaginatedQueryRequest';
 import { PaginatedDatabaseQuery } from '../../domain/request/PaginatedDatabaseQuery';
+import { Order, PaginatedQueryRequest } from '../../domain/request/PaginatedQueryRequest';
 
 export abstract class AbstractRepository<Entity, Request extends AbstractUpdateRequest> {
 	protected client: any;
@@ -12,6 +12,12 @@ export abstract class AbstractRepository<Entity, Request extends AbstractUpdateR
 	}
 
 	protected abstract getFilters(query: Request): any[];
+
+	protected getOrdination(query: PaginatedQueryRequest<Request>): any {
+		const result: { orderBy?: Order[] } = {};
+		if (query.orderBy) result.orderBy = query.orderBy;
+		return result;
+	}
 
 	public async create(entity: Entity): Promise<Entity> {
 		return this.client.create({ data: entity, ...this.joins });
@@ -30,9 +36,11 @@ export abstract class AbstractRepository<Entity, Request extends AbstractUpdateR
 	public async search(request: PaginatedQueryRequest<Request>): Promise<Entity[]> {
 		const query = new PaginatedDatabaseQuery(request);
 		if (request.query) query.where = { OR: this.getFilters(request.query) };
+		const ordination = this.getOrdination(request);
 
 		return this.client.findMany({
 			...query,
+			...ordination,
 			...this.joins
 		});
 	}
