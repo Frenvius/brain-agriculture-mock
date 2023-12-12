@@ -1,6 +1,7 @@
 services:
   web:
     build: .
+    network_mode: bridge
     env_file:
       - .env
     ports:
