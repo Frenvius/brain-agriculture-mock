@@ -5,6 +5,7 @@ import swaggerUi from 'swagger-ui-express';
 
 import { RegisterRoutes } from './routes';
 import swaggerDocument from './swagger.json';
+import { ErrorHandlerStrategy } from './adapter/handler/error/ErrorHandlerStrategy';
 
 class Server {
 	private readonly _app: Express;
@@ -25,6 +26,7 @@ class Server {
 		this._app.use(cors());
 		this._app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 		RegisterRoutes(this._app);
+		this._app.use(ErrorHandlerStrategy.handleByError);
 		this._startListening();
 	}
 }
